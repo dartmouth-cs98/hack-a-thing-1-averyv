@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Animated, Easing, Dimensions} from 'react-native';
 import ajax from './src/ajax';
 import DealList from './src/components/DealList';
 import DealDetail from './src/components/DealDetail';
@@ -9,12 +9,24 @@ import SearchBar from './src/components/SearchBar';
 console.disableYellowBox = true;
 
 class App extends React.Component {
+  titleXPos = new Animated.Value(0); // relative value, not absolute!!
   state = {
     deals: [],
     dealsFromSearch: [],
     currentDealId: null,
   };
+  animateTitle = (direction = 1) => {
+    const width = Dimensions.get('window').width - 150;
+    Animated.timing(
+      this.titleXPos, 
+      { toValue: direction * width / 2, duration: 1000, easing: Easing.bounce, }
+    ).start(({finished}) => {
+      if (finished) {
+        this.animateTitle(-1 * direction); }
+    });
+  }
   async componentDidMount() {
+    this.animateTitle();
     const deals = await ajax.fetchInitialDeals();
     this.setState({deals});
   };
@@ -62,16 +74,16 @@ class App extends React.Component {
         </View> )
     }
     return (
-      <View style={styles.container}>
+      <Animated.View style={[{ left: this.titleXPos }, styles.container]}>
           <Text style={styles.header}>Bakesale</Text>
-      </View>
+      </Animated.View>
     )
   }
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#DCDCDC',
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
   },
