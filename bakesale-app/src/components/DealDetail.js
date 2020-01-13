@@ -1,15 +1,24 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
 
-import {View, Text, Image, StyleSheet, TouchableOpacity, Linking, Dimensions, PanResponder, Animated, Button} from 'react-native';
+import {
+    View, 
+    Text, 
+    Image, 
+    StyleSheet, 
+    TouchableOpacity, 
+    Linking, 
+    Dimensions, 
+    PanResponder, 
+    Animated, 
+    Button
+} from 'react-native';
 
 import {priceDisplay} from '../util';
 import ajax from '../ajax';
 
 class DealDetail extends React.Component {
     imageXPos = new Animated.Value(0);
-    //width = 0;
     imagePanResponder = PanResponder.create({
         onStartShouldSetPanResponder: () => true,
         onPanResponderMove: (evt, gs) => {
@@ -60,10 +69,10 @@ class DealDetail extends React.Component {
         this.setState({
             deal: fullDeal,
         });
-    }
+    };
     openDealUrl = () => {
         Linking.openURL(this.state.deal.url);
-    }
+    };
     render() {
         const { deal } = this.state;
         return (
@@ -76,30 +85,23 @@ class DealDetail extends React.Component {
                 <View style={styles.itemInfo}>
                     <Text style={styles.title}>{deal.title}</Text>
                     <View style={styles.footer}>
-                        
-                            <Text>Cause: {deal.cause.name}</Text>
-                            <Text>Cost: {priceDisplay(deal.price)}</Text>
-                    
+                        <Text>Cause: {deal.cause.name}</Text>
+                        <Text>Cost: {priceDisplay(deal.price)}</Text>
                     </View>
                     <View style={styles.userInfo}>
-                            {deal.user && (
-                                <View>
-                                    <Image source={{ uri: deal.user.avatar }} style={styles.avatar} />
-                                    <Text>{deal.user.name}</Text>
-                                </View>
-                            )}
-                        </View>
+                        {deal.user && (
+                            <View>
+                                <Image source={{ uri: deal.user.avatar }} style={styles.avatar} />
+                                <Text>{deal.user.name}</Text>
+                            </View>
+                        )}
+                    </View>
                     <View>
-                    <Text style={styles.description}>{deal.description}</Text>
-    
-                </View>
+                        <Text style={styles.description}>{deal.description}</Text>
+                    </View>
                 <Button title="Buy this deal!" onPress={this.openDealUrl}></Button>
                 </View>
-                
-                
-               
             </View>
-            
         );
     }
 }
@@ -145,8 +147,6 @@ const styles = StyleSheet.create({
         padding: 10,
         marginBottom: 25,
     },
-    
 });
-
 
 export default DealDetail;

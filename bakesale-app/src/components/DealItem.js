@@ -1,9 +1,13 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
 
-import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
-
+import {
+    View, 
+    Text, 
+    Image, 
+    StyleSheet, 
+    TouchableOpacity
+} from 'react-native';
 import {priceDisplay} from '../util';
 
 class DealItem extends React.Component {
@@ -65,6 +69,5 @@ const styles = StyleSheet.create({
         textAlign: 'right',
     }
 });
-
 
 export default DealItem;
